@@ -23,13 +23,20 @@ namespace MSTestMoodAnalyzerProblem
         //This method analyzes mood
         public string AnalyseMood()
         {
-            //if condition for to check happy word is present is or not
-            if (message.ToLower().Contains("sad"))
+            try
             {
-                return "SAD";
+                //if condition for to check null is present or not
+                if (message.ToLower().Contains(""))
+                {
+                    return "happy";
+                }
+                else
+                    return "sad";
             }
-            else
-                return "HAPPY";
-        }
+            catch(NullReferenceException message)
+            {
+                return "happy";
+            }
+            }
     }
 }
