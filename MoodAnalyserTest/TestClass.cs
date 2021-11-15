@@ -32,12 +32,12 @@ namespace MoodAnalyserTest
             //Arrange
             string expected = "message should not be null";
             //creating object of moodanalyzer class and passing null
-            MoodAnalyzer modeAnalyzer = new MoodAnalyzer(" ");
+            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(" ");
 
             try
             {
                 //Act
-                string actual = modeAnalyzer.AnalyseMood();
+                string actual = moodAnalyzer.AnalyseMood();
 
             }
             catch (CustomException ex)
@@ -57,12 +57,12 @@ namespace MoodAnalyserTest
             //Arrange
             string expected = "message should not be empty";
             //creating object of moodanalyzer class and passing null
-            MoodAnalyzer modeAnalyzer = new MoodAnalyzer(string.Empty);
+            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(string.Empty);
 
             try
             {
                 //Act
-                string actual = modeAnalyzer.AnalyseMood1();
+                string actual = moodAnalyzer.AnalyseMood1();
 
             }
             catch (CustomException ex)
@@ -74,7 +74,55 @@ namespace MoodAnalyserTest
             }
 
         }
+        [TestMethod]
+        //Test Case 4.1 given mood Analyse class name should return mood analyser object.
 
+        public void GivenMoodAnalyseClassName_Should_return_MoodAnalyseObject()
+        {
+            string message = null;
+            
+            object expected = new MoodAnalyzer(message);
+            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MSTestMoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyser");
+            expected.Equals(obj);
+        }
+        [TestMethod]
+        //Test Case 4.2 Given mood Analyse wrong class name should return exception stating no such class name exist 
+
+        public void GivenMoodAnalyseWrongClassName_Should_return_MoodAnalyseObjectException_Message()
+        {
+            try
+            {
+                string message = null;           
+                object expected = new MoodAnalyzer(message);
+                object obj = MoodAnalyserFactory.CreateMoodAnalyse("MSTestMoodAnalyzerProblem.MoodAnalyserWrong", "MoodAnalyserWrong");
+                expected.Equals(obj);
+            }
+
+            catch (CustomException ex)
+            {
+                Assert.AreEqual("Class not found", ex.Message);
+            }
+        }
+        [TestMethod]
+        //Test Case 4.3 Given wrong constructor name should return simproper message in exception  
+
+        public void GivenMoodAnalyseWrongConstructor_Should_return_MoodAnalyseObjectException_Message()
+        {
+            try
+            {
+                string message = null;
+                object expected = new MoodAnalyzer(message);
+                object obj = MoodAnalyserFactory.CreateMoodAnalyse("MSTestMoodAnalyzerProblem.MoodAnalyser", "MoodAnalyserWrong");
+                expected.Equals(obj);
+            }
+
+            catch (CustomException ex)
+            {
+                Assert.AreEqual("Constructor not found", ex.Message);
+            }
+        }
+        
     }
+
 
 }

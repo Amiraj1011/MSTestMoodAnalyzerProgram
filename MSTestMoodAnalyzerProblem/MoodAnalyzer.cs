@@ -20,6 +20,12 @@ namespace MSTestMoodAnalyzerProblem
         {
             this.message = message;
         }
+        //initialising the default constructor
+        public MoodAnalyzer()                
+        {
+            this.message = null;
+        }
+
         //This method analyzes mood
         public string AnalyseMood()
         {
