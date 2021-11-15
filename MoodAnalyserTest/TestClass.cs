@@ -121,7 +121,51 @@ namespace MoodAnalyserTest
                 Assert.AreEqual("Constructor not found", ex.Message);
             }
         }
-        
+        [TestMethod]
+        //Test Case 5.1 given mood Analyse class name should return mood analyser object with parameterised constructor
+
+        public void Given_ParameterisedConstructor_MoodAnalyseClassName_Should_return_MoodAnalyseObject()
+        {
+            object expected = new MoodAnalyzer("HAPPY");
+            object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MSTestMoodAnalyzerProblem.MoodAnalyser", "MoodAnalyser");
+            expected.Equals(obj);
+        }
+        [TestMethod]
+        //Test Case 5.2 Given mood Analyse wrong class name should return exception stating no such class name exist 
+
+        public void Given_ParameterisedConstructor_WrongClassName_Should_return_MoodAnalyseObjectException_Message()
+        {
+            try
+            {
+                object expected = new MoodAnalyzer("HAPPY");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MSTestMoodAnalyzerProblem.MoodAnalyserWrong", "MoodAnalyser");
+                expected.Equals(obj);
+            }
+
+            catch (CustomException ex)
+            {
+                Assert.AreEqual("Class not found", ex.Message);
+            }
+        }
+
+
+        //Test Case 5.3 Given mood Analyse wrong constructor name should return exception stating no such consrtructor exist 
+        [TestMethod]
+        public void Given_ParameterisedConstructor_WrongConstrcutorName_Should_return_MoodAnalyseObjectException_Message()
+        {
+            try
+            {
+                object expected = new MoodAnalyzer("HAPPY");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MSTestMoodAnalyzerProblem.MoodAnalyser", "MoodAnalyserWrong");
+                expected.Equals(obj);
+            }
+
+            catch (CustomException ex)
+            {
+                Assert.AreEqual("Class not found", ex.Message);
+            }
+        }
+
     }
 
 
