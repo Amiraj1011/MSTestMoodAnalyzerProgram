@@ -39,7 +39,7 @@ namespace TestClass
 
         // Test Case 3.1 : Given null mood, should throw custom exception
         [TestMethod]
-        public void Given_Null_Should_Throw_CustomException_Indicating_NullMood()
+        public void GivenNullShouldThrowCustomExceptionIndicatingNullMood()
         {
             try
             {
@@ -56,7 +56,7 @@ namespace TestClass
 
         // Test Case 3.2 : Given Empty mood should throw custom exception showing empty.
         [TestMethod]       
-        public void Given_Empty_Should_Throw_CustomException_Indicating_EmptyMood()
+        public void GivenEmptyShouldThrowCustomExceptionIndicatingEmptyMood()
         {        
             try
             {
@@ -72,7 +72,7 @@ namespace TestClass
 
         // Test Case 4.1 :Given mood Analyse class name should return mood analyser object.
         [TestMethod]       
-        public void GivenMoodAnalyseClassName_Should_return_MoodAnalyseObject()
+        public void GivenMoodAnalyseClassNameShouldReturnMoodAnalyseObject()
         {
             string message = null;
             object expected = new MoodAnalyser(message);
@@ -82,7 +82,7 @@ namespace TestClass
 
         // Test Case 4.2 : Given mood Analyse wrong class name should return exception stating no such class name exist 
         [TestMethod]
-        public void GivenMoodAnalyseWrongClassName_Should_return_MoodAnalyseObjectException_Message()
+        public void GivenMoodAnalyseWrongClassNameShouldReturnMoodAnalyseObjectException_Message()
         {
             try
             {
@@ -100,7 +100,7 @@ namespace TestClass
 
         // Test Case 4.3 : Given wrong constructor name should return improper message in exception 
         [TestMethod]
-        public void GivenMoodAnalyseWrongConstructor_Should_return_MoodAnalyseObjectException_Message()
+        public void GivenMoodAnalyseWrongConstructorShouldReturnMoodAnalyseObjectException_Message()
         {
             try
             {
@@ -127,7 +127,7 @@ namespace TestClass
 
         //Test Case 5.2 : Given mood Analyse wrong class name should return exception stating no such class name exist
         [TestMethod]
-        public void Given_ParameterisedConstructor_WrongClassName_Should_return_MoodAnalyseObjectException_Message()
+        public void GivenParameterisedConstructorWrongClassNameShouldReturnMoodAnalyseObjectException_Message()
         {
             try
             {
@@ -162,7 +162,7 @@ namespace TestClass
         //Test Case 6.1
         [TestMethod]
         
-        public void GivenHappy_ShouldReturn_Happy_ReflectorInvoke_method()
+        public void GivenHappyShouldReturnHappyReflectorInvoke_method()
         {
             string expected = "HAPPY";
             string mood = MoodAnalyserFactory.InvokeAnalyseMood("Happy", "AnalyseMood");
@@ -171,7 +171,7 @@ namespace TestClass
 
         //Test Case 6.2
         [TestMethod]       
-        public void GivenHappy_ShouldReturnException_WithWrongMethodName()
+        public void GivenHappyShouldReturnExceptionWithWrongMethodName()
         {
             try
             {
@@ -185,6 +185,46 @@ namespace TestClass
                 Assert.AreEqual("method not found", ex.Message);
             }
         }
+
+        //Test Case 7.1 : Here we checking that the field returns the message that we enter or specify during runtime dynamically
+        [TestMethod]
+        public void GivenHappy_ShouldReturnHappy_WithReflectorDynamically()
+        {
+            string result = MoodAnalyserFactory.Setfield("Happy", "message");
+            Assert.AreEqual("Happy", result);
+        }
+
+        //Test Case 7.2 : Here we provideing wrong field name to get an exception
+        [TestMethod]       
+        public void GivenWrongFieldShouldReturnException()
+        {
+            try
+            {
+                string result = MoodAnalyserFactory.Setfield("Happy", "messageWrong");
+                Assert.AreEqual("Happy", result);
+            }
+            catch (CustomMoodException ex)
+            {
+                Assert.AreEqual("Field not found", ex.Message);
+            }
+        }
+
+        //Test Case 7.3 : Here we passing empty message in the reflector and see what exception it throws
+        [TestMethod]       
+        public void GivenEmptyMessageShouldReturnException()
+        {
+            try
+            {
+                string result = MoodAnalyserFactory.Setfield(null, "messageWrong");
+                Assert.AreEqual("Happy", result);
+            }
+            catch (CustomMoodException ex)
+            {
+                Assert.AreEqual("Message should not be null", ex.Message);
+            }
+        }
+
+
 
     }
 }

@@ -138,8 +138,9 @@ namespace MoodAnalyserProblem
 
             catch (NullReferenceException)
             {
-                throw new CustomMoodException(CustomMoodException.ExceptionType.NO_SUCH_FIELD, "Field should not be null");
+                throw new CustomMoodException(CustomMoodException.ExceptionType.NO_SUCH_FIELD, "Field not found");
             }
         }
+
     }
 }
