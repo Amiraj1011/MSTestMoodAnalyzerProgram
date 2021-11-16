@@ -1,172 +1,190 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MSTestMoodAnalyzerProblem;
+using MoodAnalyserProblem;
 
-namespace MoodAnalyserTest
+namespace TestClass
 {
     [TestClass]
-    public class TestClass
-    {
-        //Test case 2.1 : Handle exception if user provide null mood 
+    public class UnitTest1
+    {       
+        // Test Case 1.1 : Given I am in sad mood should return SAD.
         [TestMethod]
-        public void GivenNullMoodReturnHappy()
+        public void GivenSadshouldreturnSad()
         {
-            //AAA method
             //Arrange
-            string message = " ";
-            string expected = "happy";
-            //creating object of moodanalyzer class and passing message
-            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(message);
-            
+            string expected = "SAD";
+            string message = "I am in sad mood";
+            MoodAnalyser moodAnalysis = new MoodAnalyser(message);
+
             //Act
-            string actual = moodAnalyzer.AnalyseMood();
+            string mood = moodAnalysis.AnalyseMood();
 
             //Assert
-            //comparing actual and expected value
-            Assert.AreEqual(expected, actual);         
+            Assert.AreEqual(expected, mood);
         }
-        //Test Case 3.1 : Given null mood should throw mood exception indicating null mood
-        [TestMethod]
-        public void getCustomNullException()
+        // Test Case 1.2 : Given I am in happy mood should return HAPPY.
+        [TestMethod]      
+        public void GivenHappyshouldreturnHappy()
         {
-            ///AAA method
             //Arrange
-            string expected = "message should not be null";
-            //creating object of moodanalyzer class and passing null
-            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(" ");
+            string expected = "HAPPY";
+            string message = "I am in happy mood";
+            MoodAnalyser moodAnalysis = new MoodAnalyser(message);
 
+            //Act
+            string mood = moodAnalysis.AnalyseMood();
+
+            //Assert
+            Assert.AreEqual(expected, mood);
+        }
+
+        // Test Case 3.1 : Given null mood, should throw custom exception
+        [TestMethod]
+        public void Given_Null_Should_Throw_CustomException_Indicating_NullMood()
+        {
             try
             {
-                //Act
-                string actual = moodAnalyzer.AnalyseMood();
-
+                string message = null;
+                MoodAnalyser moodAnalysis = new MoodAnalyser(message);
+                string mood = moodAnalysis.AnalyseMood();
             }
-            catch (CustomException ex)
+            catch (CustomMoodException e)
             {
-
-                //Assert
-                //comparing actual and expected value
-                Assert.AreEqual(expected, ex.Message);
+                Assert.AreEqual("Mood can not be null", e.Message);
             }
 
         }
-        //Test case 3.2 : Given empty message should throw mood exception indicating empty mood
-        [TestMethod]
-        public void getCustomEmptyException()
-        {
-            ///AAA method
-            //Arrange
-            string expected = "message should not be empty";
-            //creating object of moodanalyzer class and passing null
-            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(string.Empty);
 
+        // Test Case 3.2 : Given Empty mood should throw custom exception showing empty.
+        [TestMethod]       
+        public void Given_Empty_Should_Throw_CustomException_Indicating_EmptyMood()
+        {        
             try
             {
-                //Act
-                string actual = moodAnalyzer.AnalyseMood1();
-
+                string message = "";
+                MoodAnalyser moodAnalysis = new MoodAnalyser(message);
+                string mood = moodAnalysis.AnalyseMood();
             }
-            catch (CustomException ex)
+            catch (CustomMoodException e)
             {
-
-                //Assert
-                //comparing actual and expected value
-                Assert.AreEqual(expected, ex.Message);
+                Assert.AreEqual("Mood should not be Empty", e.Message);
             }
-
         }
-        [TestMethod]
-        //Test Case 4.1 given mood Analyse class name should return mood analyser object.
 
+        // Test Case 4.1 :Given mood Analyse class name should return mood analyser object.
+        [TestMethod]       
         public void GivenMoodAnalyseClassName_Should_return_MoodAnalyseObject()
         {
             string message = null;
-            
-            object expected = new MoodAnalyzer(message);
-            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MSTestMoodAnalyzerProblem.MoodAnalyzer", "MoodAnalyser");
+            object expected = new MoodAnalyser(message);
+            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyserProblem.MoodAnalyser", "MoodAnalyser");
             expected.Equals(obj);
         }
-        [TestMethod]
-        //Test Case 4.2 Given mood Analyse wrong class name should return exception stating no such class name exist 
 
+        // Test Case 4.2 : Given mood Analyse wrong class name should return exception stating no such class name exist 
+        [TestMethod]
         public void GivenMoodAnalyseWrongClassName_Should_return_MoodAnalyseObjectException_Message()
         {
             try
             {
-                string message = null;           
-                object expected = new MoodAnalyzer(message);
-                object obj = MoodAnalyserFactory.CreateMoodAnalyse("MSTestMoodAnalyzerProblem.MoodAnalyserWrong", "MoodAnalyserWrong");
+                string message = null;
+                object expected = new MoodAnalyser(message);
+                object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyserProblem.MoodAnalyserWrong", "MoodAnalyserWrong");
                 expected.Equals(obj);
             }
 
-            catch (CustomException ex)
+            catch (CustomMoodException ex)
             {
                 Assert.AreEqual("Class not found", ex.Message);
             }
         }
-        [TestMethod]
-        //Test Case 4.3 Given wrong constructor name should return simproper message in exception  
 
+        // Test Case 4.3 : Given wrong constructor name should return improper message in exception 
+        [TestMethod]
         public void GivenMoodAnalyseWrongConstructor_Should_return_MoodAnalyseObjectException_Message()
         {
             try
             {
                 string message = null;
-                object expected = new MoodAnalyzer(message);
-                object obj = MoodAnalyserFactory.CreateMoodAnalyse("MSTestMoodAnalyzerProblem.MoodAnalyser", "MoodAnalyserWrong");
+                object expected = new MoodAnalyser(message);
+                object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyserProblem.MoodAnalyser", "MoodAnalyserWrong");
                 expected.Equals(obj);
             }
 
-            catch (CustomException ex)
+            catch (CustomMoodException ex)
             {
                 Assert.AreEqual("Constructor not found", ex.Message);
             }
         }
-        [TestMethod]
-        //Test Case 5.1 given mood Analyse class name should return mood analyser object with parameterised constructor
 
+        //Test Case 5.1 : Given mood Analyse class name should return mood analyser object with parameterised constructor
+        [TestMethod]
         public void Given_ParameterisedConstructor_MoodAnalyseClassName_Should_return_MoodAnalyseObject()
         {
-            object expected = new MoodAnalyzer("HAPPY");
-            object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MSTestMoodAnalyzerProblem.MoodAnalyser", "MoodAnalyser");
+            object expected = new MoodAnalyser("HAPPY");
+            object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MoodAnalyserProblem.MoodAnalyser", "MoodAnalyser", "Happy");
             expected.Equals(obj);
         }
-        [TestMethod]
-        //Test Case 5.2 Given mood Analyse wrong class name should return exception stating no such class name exist 
 
+        //Test Case 5.2 : Given mood Analyse wrong class name should return exception stating no such class name exist
+        [TestMethod]
         public void Given_ParameterisedConstructor_WrongClassName_Should_return_MoodAnalyseObjectException_Message()
         {
             try
             {
-                object expected = new MoodAnalyzer("HAPPY");
-                object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MSTestMoodAnalyzerProblem.MoodAnalyserWrong", "MoodAnalyser");
+                object expected = new MoodAnalyser("HAPPY");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MoodAnalyserProblem.MoodAnalyserWrong", "MoodAnalyser", "Happy");
                 expected.Equals(obj);
             }
 
-            catch (CustomException ex)
+            catch (CustomMoodException ex)
             {
                 Assert.AreEqual("Class not found", ex.Message);
             }
         }
 
-
-        //Test Case 5.3 Given mood Analyse wrong constructor name should return exception stating no such consrtructor exist 
+        //Test Case 5.3 : Given mood Analyse wrong constructor name should return exception stating no such consrtructor exist 
         [TestMethod]
         public void Given_ParameterisedConstructor_WrongConstrcutorName_Should_return_MoodAnalyseObjectException_Message()
         {
             try
             {
-                object expected = new MoodAnalyzer("HAPPY");
-                object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MSTestMoodAnalyzerProblem.MoodAnalyser", "MoodAnalyserWrong");
+                object expected = new MoodAnalyser("HAPPY");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserParameterisedConstructor("MoodAnalyserProblem.MoodAnalyser", "MoodAnalyserWrong", "Happy");
                 expected.Equals(obj);
             }
 
-            catch (CustomException ex)
+            catch (CustomMoodException ex)
             {
-                Assert.AreEqual("Class not found", ex.Message);
+                Assert.AreEqual("Constructor not found", ex.Message);
+            }
+        }
+
+        //Test Case 6.1
+        [TestMethod]
+        
+        public void GivenHappy_ShouldReturn_Happy_ReflectorInvoke_method()
+        {
+            string expected = "HAPPY";
+            string mood = MoodAnalyserFactory.InvokeAnalyseMood("Happy", "AnalyseMood");
+            Assert.AreEqual(expected, mood);
+        }
+
+        //Test Case 6.2
+        [TestMethod]       
+        public void GivenHappy_ShouldReturnException_WithWrongMethodName()
+        {
+            try
+            {
+                string expected = "method not found";
+                string mood = MoodAnalyserFactory.InvokeAnalyseMood("Happy", "AnalyseMoodWrong");
+                Assert.AreEqual(expected, mood);
+            }
+
+            catch (CustomMoodException ex)
+            {
+                Assert.AreEqual("method not found", ex.Message);
             }
         }
 
     }
-
-
 }

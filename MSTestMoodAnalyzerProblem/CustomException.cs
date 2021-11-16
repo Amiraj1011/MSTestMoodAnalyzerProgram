@@ -4,22 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSTestMoodAnalyzerProblem
+namespace MoodAnalyserProblem
 {
-    public class CustomException:Exception
+    /// <summary>
+    /// Mood analysis class for handling exceptions
+    /// </summary>
+    /// <seealso cref="System.Exception" />
+    public class CustomMoodException : Exception
     {
+        /// <summary>
+        /// enum for exception type
+        /// enums are like constant values which are numeric integer numbers which either the user assigns or default starting fro  0,1,2...
+        /// </summary>
+
         public ExceptionType type;
-        
         public enum ExceptionType
         {
-            Null_Type_Exception,
-            Empty_Type_Exception,
+            NULL_VALUE,
+            EMPTY_MESSAGE,
+            NO_SUCH_FIELD,
+            NO_SUCH_METHOD,
             NO_SUCH_CLASS,
-            NO_SUCH_METHOD
+            OBJECT_CREATION_ISSUE
+
         }
-        public CustomException(ExceptionType type, string message) : base(message)
+
+        public CustomMoodException(ExceptionType type, string message) : base(message)
         {
             this.type = type;
         }
+
     }
 }
